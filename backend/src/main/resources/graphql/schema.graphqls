@@ -1,0 +1,21 @@
+type Query {
+    userById(id: ID): User
+    textById(id: ID): Text
+
+}
+
+type Mutation {
+    createUser(name: String): String!
+    createText(text: String!, authorId: ID!): String!
+}
+
+type User {
+    id: ID
+    name: String
+}
+
+type Text {
+    id: ID
+    author: User
+    text: String
+}
