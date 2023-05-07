@@ -1,0 +1,5 @@
+schema: ../backend/src/main/resources/graphql/schema.graphqls
+generates:
+  graphqlTypes.ts:
+    plugins:
+      - "@graphql-codegen/typescript"

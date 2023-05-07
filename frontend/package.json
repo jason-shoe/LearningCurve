@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "graphql-codegen && next dev",
+    "build": "graphql-codegen && next build",
+    "start": "graphql-codegen && next start",
+    "lint": "next lint",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
     "@next/font": "13.1.0",
@@ -15,9 +16,17 @@
     "@types/react-dom": "18.0.10",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.0",
+    "graphql": "^16.6.0",
     "next": "13.1.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/client-preset": "^3.0.1",
+    "@graphql-codegen/typescript": "^3.0.4",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "graphql-codegen": "^0.4.0",
+    "typescript": "^5.0.4"
   }
 }

@@ -1,45 +1,45 @@
 type User {
-    id: ID
-    name: String
+    id: ID!
+    name: String!
 }
 
 type Text {
-    id: ID
-    author: User
-    text: String
-    translation: String
-    phrases: [Phrase]
+    id: ID!
+    author: User!
+    text: String!
+    translation: String!
+    phrases: [Phrase!]!
 }
 
 type Phrase {
-    id: ID
-    value: String
-    pinyin: String
-    meaning: String
+    id: ID!
+    value: String!
+    pinyin: String!
+    meaning: String!
 }
 
 type Query {
-    userById(id: ID): User
-    textById(id: ID): Text
-    phraseById(id: ID): Phrase
+    userById(id: ID!): User!
+    textById(id: ID!): Text!
+    phraseById(id: ID!): Phrase!
 }
 
 input CreatePhrase{
-    value: String
-    pinyin: String
-    meaning: String
+    value: String!
+    pinyin: String!
+    meaning: String!
 }
 
 input CreateText {
     authorId: ID!
-    text: String
-    translation: String
-    phrases: [CreatePhrase]
+    text: String!
+    translation: String!
+    phrases: [CreatePhrase!]
 }
 
 type Mutation {
-    createUser(name: String): String!
-    createText(request: CreateText): String!
+    createUser(name: String!): String!
+    createText(request: CreateText!): String!
     createPhrase(value: String!, pinyin: String!, meaning: String!): String!
 
     deleteText(textId: ID!): Boolean!
