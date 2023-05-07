@@ -13,7 +13,7 @@ public class UserController {
     UserService userService;
 
     @QueryMapping
-    public User userById(@Argument String id) {
+    public User userById(@Argument UserId id) {
         return userService.getUser(id);
     }
 

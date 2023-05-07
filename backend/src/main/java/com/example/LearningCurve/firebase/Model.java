@@ -1,5 +1,5 @@
 package com.example.LearningCurve.firebase;
 
-public abstract class Model {
-    public abstract String getId();
+public interface Model<T extends ModelId> {
+    public T getId();
 }

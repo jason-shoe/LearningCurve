@@ -2,7 +2,7 @@ package com.example.LearningCurve.user;
 
 import com.example.LearningCurve.firebase.Model;
 
-public class User extends Model {
+public class User implements Model<UserId> {
     private UserId id;
 
     private String name;
@@ -20,8 +20,8 @@ public class User extends Model {
         this.name = name;
     }
 
-    public String getId() {
-        return id.toString();
+    public UserId getId() {
+        return id;
     }
 
     public void setName(String name) {

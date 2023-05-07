@@ -1,36 +1,47 @@
 package com.example.LearningCurve.text;
 
 import com.example.LearningCurve.firebase.Model;
+import com.example.LearningCurve.phrase.PhraseId;
+import com.example.LearningCurve.user.UserId;
+import com.google.cloud.firestore.annotation.IgnoreExtraProperties;
 
-public class Text extends Model {
+import java.util.List;
+
+@IgnoreExtraProperties
+public class Text implements Model<TextId> {
+
     private TextId id;
-    private String text;
-    private String authorId;
+    private UserId authorId;
+
+    private List<PhraseId> phrases;
 
     public Text() {
+        this.id = new TextId();
     }
 
-    public Text(String id, String text, String authorId) {
+    public Text(String id, UserId authorId, List<PhraseId> phrases) {
         this.id = new TextId(id);
-        this.text = text;
         this.authorId = authorId;
+        this.phrases = phrases;
     }
 
-    public String getId() {
-        return id.toString();
+    public TextId getId() {
+        return id;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getAuthorId() {
+    public UserId getAuthorId() {
         return authorId;
     }
 
+    public List<PhraseId> getPhrases() {
+        return phrases;
+    }
 
+    public void setPhrases(List<PhraseId> phrases) {
+        this.phrases = phrases;
+    }
+
+    public void setAuthorId(UserId authorId) {
+        this.authorId = authorId;
+    }
 }
