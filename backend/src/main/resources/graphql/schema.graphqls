@@ -6,6 +6,8 @@ type User {
 type Text {
     id: ID
     author: User
+    text: String
+    translation: String
     phrases: [Phrase]
 }
 
@@ -22,15 +24,22 @@ type Query {
     phraseById(id: ID): Phrase
 }
 
-input PhraseInput {
+input CreatePhrase{
     value: String
     pinyin: String
     meaning: String
 }
 
+input CreateText {
+    authorId: ID!
+    text: String
+    translation: String
+    phrases: [CreatePhrase]
+}
+
 type Mutation {
     createUser(name: String): String!
-    createText(authorId: ID!, phrases: [PhraseInput]): String!
+    createText(request: CreateText): String!
     createPhrase(value: String!, pinyin: String!, meaning: String!): String!
 
     deleteText(textId: ID!): Boolean!

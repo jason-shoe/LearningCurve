@@ -8,26 +8,26 @@ import java.util.UUID;
 
 public class ModelId {
     ResourceIdentifier resourceIdentifier;
-    UUID id;
+    String baseId;
     String stringId;
 
 
     private static String toString(ResourceIdentifier resourceIdentifier,
-                                   UUID id) {
+                                   String baseId) {
         return resourceIdentifier.toString().toLowerCase() + '.' +
-                id.toString();
+                baseId;
     }
 
     public ModelId(ResourceIdentifier resourceIdentifier) {
         this.resourceIdentifier = resourceIdentifier;
-        this.id = UUID.randomUUID();
-        this.stringId = toString(this.resourceIdentifier, this.id);
+        this.baseId = UUID.randomUUID().toString();
+        this.stringId = toString(this.resourceIdentifier, this.baseId);
     }
 
-    public ModelId(ResourceIdentifier resourceIdentifier, String id) {
+    public ModelId(ResourceIdentifier resourceIdentifier, String baseId) {
         this.resourceIdentifier = resourceIdentifier;
-        this.id = UUID.fromString(id);
-        this.stringId = toString(this.resourceIdentifier, this.id);
+        this.baseId = baseId;
+        this.stringId = toString(this.resourceIdentifier, baseId);
     }
 
     public ModelId(String stringId) {
@@ -35,17 +35,19 @@ public class ModelId {
         List<String> parts = Arrays.stream(stringId.split(".")).toList();
         if (parts.size() == 2) {
             this.resourceIdentifier = ResourceIdentifier.valueOf(parts.get(0));
-            this.id = UUID.fromString(parts.get(1));
+            this.baseId = parts.get(1);
         }
     }
 
     @PropertyName("id")
     public String toString() {
-        if (this.resourceIdentifier != null && this.id != null) {
-            return toString(this.resourceIdentifier, this.id);
+        if (this.resourceIdentifier != null && this.baseId != null) {
+            return toString(this.resourceIdentifier, this.baseId);
         }
         return this.stringId;
     }
 
-
+    public void setBaseId(String baseId) {
+        this.baseId = baseId;
+    }
 }

@@ -37,6 +37,19 @@ public class FirebaseService<I extends ModelId, T extends Model<I>> {
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
+    public List<String> create(List<T> objects) throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+
+        WriteBatch batch = dbFirestore.batch();
+
+        objects.stream().forEach(object ->
+                batch.set(dbFirestore.collection(colName).document(object.getId().toString()), serialize(object))
+        );
+
+        ApiFuture<List<WriteResult>> result = batch.commit();
+        return result.get().stream().map(WriteResult::getUpdateTime).map(Object::toString).collect(Collectors.toList());
+    }
+
     public T get(I id) {
         try {
             Firestore dbFirestore = FirestoreClient.getFirestore();

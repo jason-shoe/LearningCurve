@@ -1,10 +1,8 @@
 package com.example.LearningCurve.text;
 
 import com.example.LearningCurve.phrase.Phrase;
-import com.example.LearningCurve.phrase.PhraseInput;
 import com.example.LearningCurve.phrase.PhraseService;
 import com.example.LearningCurve.user.User;
-import com.example.LearningCurve.user.UserId;
 import com.example.LearningCurve.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -34,16 +32,13 @@ public class TextController {
     }
 
     @MutationMapping
-    public String createText(@Argument UserId authorId, @Argument List<PhraseInput> phrases) {
+    public String createText(@Argument CreateText request) {
         try {
-            Text newText = new Text();
-            newText.setAuthorId(authorId);
-            List<Phrase> phrasesWithId = phrases.stream().map(Phrase::new).collect(Collectors.toList());
-            newText.setPhrases(phrasesWithId.stream().map(Phrase::getId).collect(Collectors.toList()));
-            for (Phrase phrase : phrasesWithId) {
-                phraseService.createPhrase(phrase);
-            }
-            return textService.createText(newText, phrasesWithId);
+            Text newText = new Text(request);
+            List<Phrase> phrases = request.getPhrases().stream().map(Phrase::new).collect(Collectors.toList());
+            newText.setPhraseIds(phrases.stream().map(Phrase::getId).collect(Collectors.toList()));
+            phraseService.bulkCreate(phrases);
+            return textService.createText(newText, phrases);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -57,7 +52,7 @@ public class TextController {
 
     @SchemaMapping
     public List<Phrase> phrases(Text text) {
-        return phraseService.getPhrases(text.getPhrases());
+        return phraseService.getPhrases(text.getPhraseIds());
     }
 
 

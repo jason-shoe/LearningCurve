@@ -19,8 +19,9 @@ public class Phrase implements Model<PhraseId> {
         this.meaning = meaning;
     }
 
-    public Phrase(PhraseInput phraseInput) {
-        this.id = new PhraseId(phraseInput.getPinyin());
+    public Phrase(CreatePhrase phraseInput) {
+        this.id = new PhraseId();
+        id.setBaseId(phraseInput.getValue());
         this.value = phraseInput.getValue();
         this.pinyin = phraseInput.getPinyin();
         this.meaning = phraseInput.getMeaning();

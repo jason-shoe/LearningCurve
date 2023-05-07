@@ -22,4 +22,7 @@ public class PhraseService {
         return firebaseService.createOrUpdate(phrase);
     }
 
+    public List<String> bulkCreate(List<Phrase> phrases) throws InterruptedException, ExecutionException {
+        return firebaseService.create(phrases);
+    }
 }
