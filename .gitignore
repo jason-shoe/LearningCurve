@@ -3,4 +3,5 @@ serviceAccount.json
 node_modules
 .next
 graphqlTypes.ts
+.env.local
 
