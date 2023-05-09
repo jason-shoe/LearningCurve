@@ -19,9 +19,9 @@ type Phrase {
 }
 
 type Query {
-    userById(id: ID!): User!
-    textById(id: ID!): Text!
-    phraseById(id: ID!): Phrase!
+    userById(id: ID!): User
+    textById(id: ID!): Text
+    phraseById(id: ID!): Phrase
 }
 
 input CreatePhrase{
