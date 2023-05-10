@@ -15,6 +15,15 @@ public class TextService {
         return firebaseService.get(textId);
     }
 
+    public List<Text> getAllTexts() {
+        try {
+            return firebaseService.getAllObjects();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String createText(
             Text text, List<Phrase> phrases) throws InterruptedException, ExecutionException {
         return firebaseService.createOrUpdate(text);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { User } from "@firebase/auth";
 import { firebaseAuth } from "./Firebase";
+import { useRouter } from "next/router";
 
 export interface AuthUser {
   uid: string;
@@ -15,10 +16,12 @@ const formatAuthUser = (user: User): AuthUser => ({
 export function useFirebaseAuth() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const authStateChanged = async (authState: User | null) => {
     if (!authState) {
       setAuthUser(null);
+      // router.push("/login");
       setLoading(false);
       return;
     }

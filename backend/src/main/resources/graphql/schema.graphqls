@@ -6,6 +6,7 @@ type User {
 type Text {
     id: ID!
     author: User!
+    title: String!
     text: String!
     translation: String!
     phrases: [Phrase!]!
@@ -19,6 +20,8 @@ type Phrase {
 }
 
 type Query {
+    texts: [Text!]!
+
     userById(id: ID!): User
     textById(id: ID!): Text
     phraseById(id: ID!): Phrase
@@ -32,6 +35,7 @@ input CreatePhrase{
 
 input CreateText {
     authorId: ID!
+    title: String!
     text: String!
     translation: String!
     phrases: [CreatePhrase!]

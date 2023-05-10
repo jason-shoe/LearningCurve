@@ -88,6 +88,18 @@ public class FirebaseService<I extends ModelId, T extends Model<I>> {
         return querySnapshot.getDocuments().stream().map(QueryDocumentSnapshot::getId).collect(Collectors.toList());
     }
 
+    public List<T> getAllObjects() throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        QuerySnapshot querySnapshot =
+                dbFirestore.collection(colName).get().get();
+        return querySnapshot
+                .getDocuments()
+                .stream()
+                .map(QueryDocumentSnapshot::getData)
+                .map(this::deserialize)
+                .collect(Collectors.toList());
+    }
+
     private Map<String, Object> serialize(T object) {
         return mapper.convertValue(object, new TypeReference<Map<String, Object>>() {
         });

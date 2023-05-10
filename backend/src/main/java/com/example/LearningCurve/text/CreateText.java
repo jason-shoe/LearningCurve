@@ -7,12 +7,14 @@ import java.util.List;
 
 public class CreateText {
     private UserId authorId;
+    private String title;
     private String text;
     private String translation;
     private List<CreatePhrase> phrases;
 
-    public CreateText(UserId authorId, String text, String translation, List<CreatePhrase> phrases) {
+    public CreateText(UserId authorId, String title, String text, String translation, List<CreatePhrase> phrases) {
         this.authorId = authorId;
+        this.title = title;
         this.text = text;
         this.translation = translation;
         this.phrases = phrases;
@@ -20,6 +22,10 @@ public class CreateText {
 
     public UserId getAuthorId() {
         return authorId;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getText() {

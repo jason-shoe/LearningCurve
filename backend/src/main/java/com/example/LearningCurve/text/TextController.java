@@ -31,6 +31,11 @@ public class TextController {
         return textService.getText(id);
     }
 
+    @QueryMapping
+    public List<Text> texts() {
+        return textService.getAllTexts();
+    }
+
     @MutationMapping
     public String createText(@Argument CreateText request) {
         try {

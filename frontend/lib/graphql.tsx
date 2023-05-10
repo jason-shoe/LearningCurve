@@ -1,13 +1,30 @@
 import { gql, GraphQLClient } from "graphql-request";
-import { Query, QueryTextByIdArgs } from "../graphqlTypes";
+import { Query, QueryTextByIdArgs, Text } from "../graphqlTypes";
 
 const graphqlClient = new GraphQLClient("http://localhost:8080/graphql", {});
+
+export type GetAllTextsResponse = Pick<Text, "id" | "title" | "text">[];
+async function getAllTexts(): Promise<GetAllTextsResponse> {
+  const query = gql`
+    query AllTexts {
+      texts {
+        id
+        text
+        title
+      }
+    }
+  `;
+
+  const response = await graphqlClient.request<Query>(query);
+  return response.texts;
+}
 
 async function getFullText(textId: string) {
   const query = gql`
     query TextById($id: ID!) {
       textById(id: $id) {
         id
+        title
         text
         translation
         phrases {
@@ -30,6 +47,6 @@ async function getFullText(textId: string) {
   return response.textById ?? undefined;
 }
 
-const GraphqlService = { getFullText };
+const GraphqlService = { getFullText, getAllTexts };
 
 export default GraphqlService;

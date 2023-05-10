@@ -12,6 +12,7 @@ public class Text implements Model<TextId> {
 
     private TextId id;
     private UserId authorId;
+    private String title;
     private String text;
     private String translation;
     private List<PhraseId> phraseIds;
@@ -20,9 +21,10 @@ public class Text implements Model<TextId> {
         this.id = new TextId();
     }
 
-    public Text(String id, UserId authorId, String text, String translation, List<PhraseId> phraseIds) {
+    public Text(String id, UserId authorId, String title, String text, String translation, List<PhraseId> phraseIds) {
         this.id = new TextId(id);
         this.authorId = authorId;
+        this.title = title;
         this.text = text;
         this.translation = translation;
         this.phraseIds = phraseIds;
@@ -31,6 +33,7 @@ public class Text implements Model<TextId> {
     public Text(CreateText createText) {
         this.id = new TextId();
         this.authorId = createText.getAuthorId();
+        this.title = createText.getTitle();
         this.text = createText.getText();
         this.translation = createText.getTranslation();
     }
@@ -41,6 +44,10 @@ public class Text implements Model<TextId> {
 
     public UserId getAuthorId() {
         return authorId;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getText() {
@@ -61,6 +68,10 @@ public class Text implements Model<TextId> {
 
     public void setAuthorId(UserId authorId) {
         this.authorId = authorId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setText(String text) {

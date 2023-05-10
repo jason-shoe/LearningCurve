@@ -1,0 +1,23 @@
+// generate me table styles where the table has border and highlights hovered rows in an scss file
+
+.container {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+  }
+
+  th,
+  td {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 8px;
+    text-align: left;
+  }
+
+  tbody tr:hover {
+    background-color: #ffd900;
+    cursor: pointer;
+  }
+}

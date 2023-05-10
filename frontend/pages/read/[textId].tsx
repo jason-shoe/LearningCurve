@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import React from "react";
-import { Query, QueryTextByIdArgs, Text } from "../../graphqlTypes";
+import { Text } from "../../graphqlTypes";
 import GraphqlService from "../../lib/graphql";
 
 export const ReadText = React.memo(function ReadTextFn({
