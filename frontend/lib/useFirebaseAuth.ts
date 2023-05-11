@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { User } from "@firebase/auth";
 import { firebaseAuth } from "./Firebase";
 import { useRouter } from "next/router";
+import CookieStorage from "./CookieStorage";
 
 export interface AuthUser {
   uid: string;
@@ -27,6 +28,8 @@ export function useFirebaseAuth() {
     }
 
     setLoading(true);
+    const token = await authState.getIdToken();
+    CookieStorage.setCookie("token", token);
     var formattedUser = formatAuthUser(authState);
     setAuthUser(formattedUser);
     setLoading(false);

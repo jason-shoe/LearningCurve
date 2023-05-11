@@ -1,10 +1,17 @@
 import { gql, GraphQLClient } from "graphql-request";
 import { Query, QueryTextByIdArgs, Text } from "../graphqlTypes";
 
-const graphqlClient = new GraphQLClient("http://localhost:8080/graphql", {});
+const getGraphqlClient = (tokenId: string | undefined) => {
+  const graphqlClient = new GraphQLClient("http://localhost:8080/graphql", {
+    headers: tokenId ? { Authorization: `Bearer ${tokenId}` } : {},
+  });
+
+  return graphqlClient;
+};
 
 export type GetAllTextsResponse = Pick<Text, "id" | "title" | "text">[];
-async function getAllTexts(): Promise<GetAllTextsResponse> {
+async function getAllTexts(tokenId: string): Promise<GetAllTextsResponse> {
+  const graphqlClient = getGraphqlClient(tokenId);
   const query = gql`
     query AllTexts {
       texts {
@@ -19,7 +26,8 @@ async function getAllTexts(): Promise<GetAllTextsResponse> {
   return response.texts;
 }
 
-async function getFullText(textId: string) {
+async function getFullText(tokenId: string | undefined, textId: string) {
+  const graphqlClient = getGraphqlClient(tokenId);
   const query = gql`
     query TextById($id: ID!) {
       textById(id: $id) {
