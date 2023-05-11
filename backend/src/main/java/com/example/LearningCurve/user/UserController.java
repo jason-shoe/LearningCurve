@@ -18,10 +18,9 @@ public class UserController {
     }
 
     @MutationMapping
-    public String createUser(@Argument String name) {
+    public String createUser(@Argument CreateUser request) {
         try {
-            User newUser = new User();
-            newUser.setName(name);
+            User newUser = new User(request);
             return userService.createUser(newUser);
         } catch (Exception e) {
             e.printStackTrace();

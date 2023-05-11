@@ -16,6 +16,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-admin:9.1.1'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
     // Every function needs this dependency to get the Functions Framework API.
     compileOnly 'com.google.cloud.functions:functions-framework-api:1.0.4'
 

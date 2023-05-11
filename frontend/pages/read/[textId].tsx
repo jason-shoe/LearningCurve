@@ -22,7 +22,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       text,
-      tokenId,
     },
   };
 }

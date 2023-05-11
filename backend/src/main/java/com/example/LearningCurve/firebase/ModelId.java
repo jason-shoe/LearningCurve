@@ -1,7 +1,5 @@
 package com.example.LearningCurve.firebase;
 
-import com.google.cloud.firestore.annotation.PropertyName;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +37,6 @@ public class ModelId {
         }
     }
 
-    @PropertyName("id")
     public String toString() {
         if (this.resourceIdentifier != null && this.baseId != null) {
             return toString(this.resourceIdentifier, this.baseId);

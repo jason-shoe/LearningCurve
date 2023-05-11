@@ -3,6 +3,7 @@ package com.example.LearningCurve.firebase;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
@@ -25,6 +26,7 @@ public class FirebaseService<I extends ModelId, T extends Model<I>> {
         SimpleModule module = new SimpleModule();
         module.addSerializer(ModelId.class, new ModelIdSerializer());
         objectMapper.registerModule(module);
+        objectMapper.registerModule(new Jdk8Module());
         this.mapper = objectMapper;
         this.clazz = clazz;
     }

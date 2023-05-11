@@ -1,5 +1,12 @@
 import { gql, GraphQLClient } from "graphql-request";
-import { Query, QueryTextByIdArgs, Text } from "../graphqlTypes";
+import {
+  CreateUser,
+  Mutation,
+  MutationCreateUserArgs,
+  Query,
+  QueryTextByIdArgs,
+  Text,
+} from "../graphqlTypes";
 
 const getGraphqlClient = (tokenId: string | undefined) => {
   const graphqlClient = new GraphQLClient("http://localhost:8080/graphql", {
@@ -55,6 +62,19 @@ async function getFullText(tokenId: string | undefined, textId: string) {
   return response.textById ?? undefined;
 }
 
-const GraphqlService = { getFullText, getAllTexts };
+async function createUser(tokenId: string | undefined, request: CreateUser) {
+  const graphqlClient = getGraphqlClient(tokenId);
+  const query = gql`
+    mutation CreateUser($request: CreateUser!) {
+      createUser(request: $request)
+    }
+  `;
+  const response = await graphqlClient.request<
+    Mutation,
+    MutationCreateUserArgs
+  >(query, { request });
+}
+
+const GraphqlService = { getFullText, getAllTexts, createUser };
 
 export default GraphqlService;

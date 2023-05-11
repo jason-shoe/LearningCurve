@@ -1,6 +1,8 @@
 type User {
     id: ID!
-    name: String!
+    name: String
+    latestSession: String!
+    lastActive: String!
 }
 
 type Text {
@@ -41,8 +43,13 @@ input CreateText {
     phrases: [CreatePhrase!]
 }
 
+input CreateUser {
+    userId: ID!
+    name: String
+}
+
 type Mutation {
-    createUser(name: String!): String!
+    createUser(request: CreateUser!): String!
     createText(request: CreateText!): String!
     createPhrase(value: String!, pinyin: String!, meaning: String!): String!
 

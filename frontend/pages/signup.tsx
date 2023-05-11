@@ -8,6 +8,9 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { AuthInput, AuthInputType } from "../lib/AuthInput";
+import CookieStorage from "../lib/CookieStorage";
+import GraphqlService from "../lib/graphql";
+import { GetServerSidePropsContext } from "next";
 
 export const Signup = React.memo(function SignupFn() {
   const router = useRouter();
@@ -16,6 +19,12 @@ export const Signup = React.memo(function SignupFn() {
   const signUpWithGoogle = useCallback(() => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(firebaseAuth, provider)
+      .then((userCredential) =>
+        GraphqlService.createUser(undefined, {
+          userId: userCredential.user.uid,
+          name: userCredential.user.displayName,
+        })
+      )
       .then(() => router.push("/"))
       .catch(console.error);
   }, []);

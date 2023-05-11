@@ -8,6 +8,7 @@ import org.springframework.graphql.server.WebGraphQlResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -16,9 +17,15 @@ class AuthInterceptor implements WebGraphQlInterceptor {
 
     @Override
     public Mono<WebGraphQlResponse> intercept(WebGraphQlRequest request, Chain chain) {
-        Optional<String> tokenId = request.getHeaders().get("Authorization").stream().findFirst().map(token -> token.split(" ")[1]);
+        logger.info(request.toString());
+        List<String> authorization = request.getHeaders().get("Authorization");
+        
+        if (authorization == null) {
+            return chain.next(request);
+        }
+
+        Optional<String> tokenId = authorization.stream().findFirst().map(token -> token.split(" ")[1]);
         Optional<String> user = tokenId.map(FirebaseUtils::getUidFromToken);
-        logger.info(tokenId.toString());
         user.ifPresent(logger::info);
         return chain.next(request);
     }
