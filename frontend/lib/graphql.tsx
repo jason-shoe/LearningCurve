@@ -17,7 +17,9 @@ const getGraphqlClient = (tokenId: string | undefined) => {
 };
 
 export type GetAllTextsResponse = Pick<Text, "id" | "title" | "text">[];
-async function getAllTexts(tokenId: string): Promise<GetAllTextsResponse> {
+async function getAllTexts(
+  tokenId: string | undefined
+): Promise<GetAllTextsResponse> {
   const graphqlClient = getGraphqlClient(tokenId);
   const query = gql`
     query AllTexts {

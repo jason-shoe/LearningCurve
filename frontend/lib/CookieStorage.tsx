@@ -1,39 +1,17 @@
 import { GetServerSidePropsContext } from "next";
+import Cookies from "js-cookie";
+import cookie from "cookie";
 
-export function setCookie(key: string, value: string) {
-  const newKeyValueMap = cookieToMap();
-  newKeyValueMap[key] = value;
-  mapToCookies(newKeyValueMap);
+export function setTokenId(value: string) {
+  Cookies.set("tokenId", value, { expires: 1 });
 }
 
-export function getCookie(
-  context: GetServerSidePropsContext,
-  key: string
+export function getTokenId(
+  context: GetServerSidePropsContext
 ): string | undefined {
-  const cookie = context.req.headers.cookie;
-  return cookieToMap(cookie)[key];
+  return cookie.parse(context.req.headers.cookie || "").tokenId;
 }
 
-function cookieToMap(cookie?: string) {
-  const cookies = (cookie ?? document.cookie).split(";");
-  const keyValues: { [key: string]: string } = {};
-  for (const cookie of cookies) {
-    const splitKeyValue = cookie.split("=");
-    if (splitKeyValue.length === 2) {
-      keyValues[splitKeyValue[0]] = splitKeyValue[1];
-    }
-  }
-  return keyValues;
-}
-
-function mapToCookies(keyValue: { [key: string]: string }) {
-  let stringCookie = "";
-  for (const [key, value] of Object.entries(keyValue)) {
-    stringCookie += `${key}=${value};`;
-  }
-  document.cookie = stringCookie;
-}
-
-const CookieStorage = { setCookie, getCookie };
+const CookieStorage = { setTokenId, getTokenId };
 
 export default CookieStorage;

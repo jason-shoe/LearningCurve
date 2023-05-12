@@ -14,7 +14,7 @@ export const ReadText = React.memo(function ReadTextFn({
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { textId } = context.params || {};
-  const tokenId = CookieStorage.getCookie(context, "token");
+  const tokenId = CookieStorage.getTokenId(context);
   let text: Text | undefined;
   if (typeof textId === "string") {
     text = await GraphqlService.getFullText(tokenId, textId);

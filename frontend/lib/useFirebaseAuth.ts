@@ -29,7 +29,7 @@ export function useFirebaseAuth() {
 
     setLoading(true);
     const token = await authState.getIdToken();
-    CookieStorage.setCookie("token", token);
+    CookieStorage.setTokenId(token);
     var formattedUser = formatAuthUser(authState);
     setAuthUser(formattedUser);
     setLoading(false);

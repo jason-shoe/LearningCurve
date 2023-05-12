@@ -1,6 +1,6 @@
 package com.example.LearningCurve.firebase;
 
 public enum ResourceIdentifier {
-    TEXT, USER, PHRASE
+    TEXT, USER, PHRASE, SESSION
 
 }

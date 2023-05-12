@@ -2,32 +2,43 @@ package com.example.LearningCurve.user;
 
 import com.example.LearningCurve.firebase.Model;
 
-import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
 
 public class User implements Model<UserId> {
     private UserId id;
     private Optional<String> name;
-    private UUID latestSession;
-    private Date lastActive;
+
+    public static class Builder {
+        private UserId id;
+        private Optional<String> name;
+
+        public Builder id(UserId id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(Optional<String> name) {
+            this.name = name;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
 
     public User() {
         this.id = new UserId();
     }
 
-    public User(UserId id, Optional<String> name, UUID latestSession, Date lastActive) {
-        this.id = id;
-        this.name = name;
-        this.latestSession = latestSession;
-        this.lastActive = lastActive;
+    public User(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
     }
 
     public User(CreateUser request) {
         this.id = request.getUserId();
         this.name = request.getName();
-        this.latestSession = UUID.randomUUID();
-        this.lastActive = new Date();
     }
 
     public UserId getId() {
@@ -37,26 +48,5 @@ public class User implements Model<UserId> {
     public Optional<String> getName() {
         return name;
     }
-
-    public UUID getLatestSession() {
-        return latestSession;
-    }
-
-    public Date getLastActive() {
-        return lastActive;
-    }
-
-    public void setName(String name) {
-        this.name = Optional.of(name);
-    }
-
-    public void setLatestSession(UUID latestSession) {
-        this.latestSession = latestSession;
-    }
-
-    public void setLastActive(Date lastActive) {
-        this.lastActive = lastActive;
-    }
-
 
 }
