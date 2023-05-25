@@ -1,8 +1,12 @@
 package com.example.LearningCurve.text;
 
+import com.example.LearningCurve.models.TextGenerationRequest;
 import com.example.LearningCurve.phrase.Phrase;
 import com.example.LearningCurve.phrase.PhraseService;
+import com.example.LearningCurve.services.chatgpt.ChatResponse;
+import com.example.LearningCurve.services.chatgpt.ChatService;
 import com.example.LearningCurve.user.User;
+import com.example.LearningCurve.user.UserId;
 import com.example.LearningCurve.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -26,6 +30,9 @@ public class TextController {
     @Autowired
     PhraseService phraseService;
 
+    @Autowired
+    ChatService chatService;
+
     @QueryMapping
     public Text textById(@Argument TextId id) {
         return textService.getText(id);
@@ -43,7 +50,25 @@ public class TextController {
             List<Phrase> phrases = request.getPhrases().stream().map(Phrase::new).collect(Collectors.toList());
             newText.setPhraseIds(phrases.stream().map(Phrase::getId).collect(Collectors.toList()));
             phraseService.bulkCreate(phrases);
-            return textService.createText(newText, phrases);
+            return textService.createText(newText);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @MutationMapping
+    public String generateText(@Argument TextGenerationRequest request) {
+        try {
+            Text newText = new Text();
+            ChatResponse response = chatService.generateText(request);
+            newText.setAuthorId(new UserId());
+            newText.setTitle(request.getPrompt());
+            newText.setText(response.getChoices().get(0).getMessage().getContent());
+            newText.setTranslation("");
+            newText.setPhraseIds(List.of());
+
+            return textService.createText(newText);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

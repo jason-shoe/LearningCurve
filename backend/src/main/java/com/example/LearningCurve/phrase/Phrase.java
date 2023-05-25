@@ -31,6 +31,18 @@ public class Phrase implements Model<PhraseId> {
         return id;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public String getMeaning() {
+        return meaning;
+    }
+
     public void setValue(String value) {
         this.value = value;
     }

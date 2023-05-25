@@ -1,7 +1,6 @@
 package com.example.LearningCurve.text;
 
 import com.example.LearningCurve.firebase.FirebaseService;
-import com.example.LearningCurve.phrase.Phrase;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class TextService {
     }
 
     public String createText(
-            Text text, List<Phrase> phrases) throws InterruptedException, ExecutionException {
+            Text text) throws InterruptedException, ExecutionException {
         return firebaseService.createOrUpdate(getCollectionReference(), text);
     }
 

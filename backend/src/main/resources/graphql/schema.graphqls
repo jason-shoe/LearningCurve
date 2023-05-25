@@ -2,6 +2,11 @@ type User {
     id: ID!
     name: String
 }
+input TextGenerationRequest {
+    difficultyLevel: String!
+    prompt: String!
+    length: Int!
+}
 
 type Text {
     id: ID!
@@ -10,6 +15,7 @@ type Text {
     text: String!
     translation: String!
     phrases: [Phrase!]!
+    difficultyLevel: String!
 }
 
 type Phrase {
@@ -18,6 +24,14 @@ type Phrase {
     pinyin: String!
     meaning: String!
 }
+
+#type Activity {
+#    id: ID!
+#    phrase: Phrase!
+#    sessionId: String
+#    text: Text!
+#    type: ActivityType!
+#}
 
 type Query {
     texts: [Text!]!
@@ -49,6 +63,7 @@ input CreateUser {
 type Mutation {
     createUser(request: CreateUser!): String!
     createText(request: CreateText!): String!
+    generateText(request: TextGenerationRequest!): String!
     createPhrase(value: String!, pinyin: String!, meaning: String!): String!
 
     deleteText(textId: ID!): Boolean!

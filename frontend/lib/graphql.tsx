@@ -46,6 +46,9 @@ async function getFullText(tokenId: string | undefined, textId: string) {
         translation
         phrases {
           id
+          meaning
+          pinyin
+          value
         }
         author {
           id

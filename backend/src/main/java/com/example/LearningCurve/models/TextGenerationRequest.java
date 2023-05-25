@@ -1,5 +1,9 @@
 package com.example.LearningCurve.models;
 
+import com.example.LearningCurve.services.chatgpt.Message;
+
+import java.util.List;
+
 public class TextGenerationRequest {
     DifficultyLevel difficultyLevel;
     String prompt;
@@ -22,4 +26,12 @@ public class TextGenerationRequest {
     public int getLength() {
         return this.length;
     }
+
+    public List<Message> getTextGenerationPrompt() {
+        return List.of(new Message("system", "Generate a " +
+                difficultyLevel.toString() +
+                " level " + length +
+                " word passage in Chinese off the following prompt"), new Message("user", prompt));
+    }
+
 }
